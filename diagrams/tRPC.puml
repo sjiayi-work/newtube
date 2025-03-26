@@ -4,5 +4,5 @@ note across: Next.js Server-First Data Pattern
 "Server Component" -> "Data Cache" : 1. Prefetch Data
 "Data Cache" -> "Hydrate Client": 2. Preserve State
 "Hydrate Client" -> "Client Components": 3. Access Cache
-"Client Components" -> "Data Cache": 4. Auto-refresh
+"Client Components" -> "Data Cache": 4. Re-validate
 @enduml
