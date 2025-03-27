@@ -1,5 +1,6 @@
 import { relations } from 'drizzle-orm';
 import { pgTable, timestamp, uuid, text, uniqueIndex, integer, pgEnum } from 'drizzle-orm/pg-core';
+import { createInsertSchema, createSelectSchema, createUpdateSchema } from 'drizzle-zod';
 
 // create 'users' schema
 export const users = pgTable('users', {
@@ -59,6 +60,11 @@ export const videos = pgTable('videos', {
         onDelete: 'set null'
     })
 });
+
+// Form schemas
+export const videoInsertSchema = createInsertSchema(videos);
+export const videoUpdateSchema = createUpdateSchema(videos);
+export const videoSelectSchema = createSelectSchema(videos);
 
 export const videoRelations = relations(videos, ({ one }) => ({
     user: one(users, {
