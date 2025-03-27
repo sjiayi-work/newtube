@@ -44,7 +44,7 @@ const VideosSectionSuspense = () => {
                         { videos.pages.flatMap((page) => page.items).map((video) => (
                             <Link href={`/studio/videos/${video.id}`} key={video.id} legacyBehavior>
                                 <TableRow>
-                                    <TableCell>{ video.title }</TableCell>
+                                    <TableCell className="pl-6">{ video.title }</TableCell>
                                     <TableCell>visibility</TableCell>
                                     <TableCell>status</TableCell>
                                     <TableCell>date</TableCell>

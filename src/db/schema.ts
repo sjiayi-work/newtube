@@ -38,6 +38,13 @@ export const videos = pgTable('videos', {
     description: text('description'),
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
+    // Mux properties
+    muxStatus: text('mux_status'),
+    muxAssetId: text('mux_asset_id').unique(),
+    muxUploadId: text('mux_upload_id').unique(),
+    muxPlaybackId: text('mux_playback_id').unique(),
+    muxTrackId: text('mux_track_id').unique(),
+    muxTrackStatus: text('mux_track_status'),
     // Foreign keys
     userId: uuid('user_id').references(() => users.id, {
         onDelete: 'cascade'
