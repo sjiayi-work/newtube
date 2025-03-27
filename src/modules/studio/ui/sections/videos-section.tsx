@@ -3,11 +3,15 @@
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { format } from 'date-fns';
 
-import { InfiniteScroll } from '@/components/infinite-scroll';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { DEFAULT_LIMIT } from '@/constants';
 import { trpc } from '@/trpc/client';
+import { snakeCaseToTitle } from '@/lib/utils';
+import { InfiniteScroll } from '@/components/infinite-scroll';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { VideoThumbnail } from '@/modules/videos/ui/components/video-thumbnail';
+import { Globe2Icon, LockIcon } from 'lucide-react';
 
 export const VideosSection = () => {
     return (
@@ -43,11 +47,38 @@ const VideosSectionSuspense = () => {
                     <TableBody>
                         { videos.pages.flatMap((page) => page.items).map((video) => (
                             <Link href={`/studio/videos/${video.id}`} key={video.id} legacyBehavior>
-                                <TableRow>
-                                    <TableCell className="pl-6">{ video.title }</TableCell>
-                                    <TableCell>visibility</TableCell>
-                                    <TableCell>status</TableCell>
-                                    <TableCell>date</TableCell>
+                                <TableRow className="cursor-pointer">
+                                    <TableCell>
+                                        <div className="flex items-center gap-4">
+                                            <div className="relative aspect-video w-36 shrink-0">
+                                                <VideoThumbnail imageUrl={video.thumbnailUrl} 
+                                                                previewUrl={video.previewUrl}
+                                                                title={video.title}
+                                                                duration={video.duration || 0} />
+                                            </div>
+                                            <div className="flex flex-col overflow-hidden gap-y-1">
+                                                <span className="text-sm line-clamp-1">{ video.title }</span>
+                                                <span className="text-xs line-clamp-1 text-muted-foreground">
+                                                    { video.description || 'No description' }
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className="flex items-center">
+                                            { video.visibility === 'private' ? (
+                                                <LockIcon className="size-4 mr-2" />
+                                            ): <Globe2Icon className="size-4 mr-2" />
+                                            }
+                                            { snakeCaseToTitle(video.visibility) }
+                                        </div>
+                                    </TableCell>
+                                    <TableCell className="text-sm truncate">
+                                        <div className="flex items-center">
+                                            { snakeCaseToTitle(video.muxStatus || 'error') }
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>{ format(new Date(video.createdAt), 'd MMM yyyy') }</TableCell>
                                     <TableCell className="text-right">views</TableCell>
                                     <TableCell className="text-right">comments</TableCell>
                                     <TableCell className="text-right pr-6">likes</TableCell>
