@@ -1,0 +1,26 @@
+@startuml change-video-thumbnail
+title Change thumbnail
+actor user
+participant "Next.js app" as next
+database Neon as db
+participant "uploadthing" as uploadthing
+
+group Update thumbnail
+    user -> next : 1. Upload new thumbnail
+    next -> uploadthing : 2. Update thumbnail
+    
+    note right
+        The thumbnail URL
+        remain unchange.
+    end note
+end
+
+group Restore thumbnail
+    user -> next : 1. Trigger restore action
+    next -> uploadthing : 2a). Delete thumbnail
+    next -> db : 2b). Request video thumbnailUrl
+    db -> next : 2c). Return video thumbnailUrl
+    next -> uploadthing: 3a). Form and upload the thumbnail
+    next -> db : 3b). Update thumbnailUrl and thumbnailKey
+end
+@enduml

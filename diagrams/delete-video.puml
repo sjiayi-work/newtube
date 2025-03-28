@@ -1,0 +1,19 @@
+@startuml delete-video
+title Delete video
+
+actor user
+participant "Next.js app" as next
+database Neon as db
+participant Mux as mux
+
+group Delete in Next.js
+    user -> next : 1. Delete video
+    next -> db : 2. Delete video record
+end
+
+group Delete in Mux
+    user -> mux : 1. Delete video
+    mux -> next : 2. Trigger webhook POST /api/videos/webhook with event "video.asset.deleted"
+    next -> db : 3. Delete video record
+end
+@enduml

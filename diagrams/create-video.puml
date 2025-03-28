@@ -1,0 +1,32 @@
+@startuml create-video
+title Create video
+
+actor user
+participant "Next.js app" as next
+database Neon as db
+participant "Mux" as mux
+participant "uploadthing" as uploadthing
+
+user -> next : 1. Open "Upload video" dialog
+next -> mux : 2a). Create an upload
+next -> db : 2b). Create a video with status "waiting"
+user -> next : 3. Upload video
+mux -> next : 4. Trigger webhook POST /api/videos/webhook with event "video.asset.created"
+next -> db : 5. Update video uploadId and status "preparing"
+
+alt successful
+    mux -> next : 6. Trigger webhook POST /api/videos/webhook with event "video.asset.ready"
+    next -> uploadthing: 7a) Upload thumbnail and preview images
+    note right
+        Example of thumbnail URL:
+        https://image.mux.com/
+        ${muxPlaybackId}/thumbnail.png
+    end note
+    next -> db : 7b) Update video metadata and status to "Ready"
+    mux -> next : 8. Trigger webhook POST /api/videos/webhook with event "video.asset.track.ready"
+    next -> db : 9. Upload video trackId and trackStatus (subtitle)
+else failure 
+    mux -> next : 6. Trigger webhook POST /api/videos/webhook with event "video.asset.errored"
+    next -> db: 7. Update video status to "error"
+end
+@enduml

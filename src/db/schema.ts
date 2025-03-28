@@ -42,7 +42,9 @@ export const videos = pgTable('videos', {
     createdAt: timestamp('created_at').defaultNow().notNull(),
     updatedAt: timestamp('updated_at').defaultNow().notNull(),
     thumbnailUrl: text('thumbnail_url'),
+    thumbnailKey: text('thumbnail_key'),
     previewUrl: text('preview_url'),
+    previewKey: text('preview_key'),
     duration: integer('duration').default(0).notNull(),
     visibility: videoVisibility('visibility').default('private').notNull(),
     // Mux properties
