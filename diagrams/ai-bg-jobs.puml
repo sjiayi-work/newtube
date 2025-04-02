@@ -1,0 +1,31 @@
+@startuml ai-bg-jobs
+title AI Generated Metadata
+actor user
+participant "Next.js app" as next
+participant "Upstash Workflow" as workflow
+participant Ollama as ollama
+participant "Mux (Video storage)" as mux
+database "Neon" as db
+
+group Generate title
+    user -> next : 1. Click 'Generate title' button
+    next -> workflow : 2. Trigger Upstash workflow
+    workflow -> next : 3. Callback **POST /api/videos/workflows/title**
+    next -> mux : 4. Get video transcript
+    mux --> next : Return transcript text
+    next -> ollama : 5. Trigger AI chat completion using the transcript text as user prompt
+    ollama --> next : Return result
+    next -> db : 6. Update video title
+end
+
+group Generate description
+    user -> next : 1. Click 'Generate description' button
+    next -> workflow : 2. Trigger Upstash workflow
+    workflow -> next : 3. Callback **POST /api/videos/workflows/description**
+    next -> mux : 4. Get video transcript
+    mux --> next : Return transcript text
+    next -> ollama : 5. Trigger AI chat completion using the transcript text as user prompt
+    ollama --> next : Return result
+    next -> db : 6. Update video description
+end
+@enduml
