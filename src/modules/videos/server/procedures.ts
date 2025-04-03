@@ -139,18 +139,24 @@ export const videosRouter = createTRPCRouter({
                                         .returning();
         return updatedVideo;
     }),
-    // NT-16: Generate AI thumbnail by triggering Upstash background workflow
-    generateThumbnail: protectedProcedure.input(z.object({ id: z.string().uuid() })).mutation(async ({ ctx, input }) => {
-        const { id: userId } = ctx.user;
-        
-        const { workflowRunId } = await workflow.trigger({
-            url: `${process.env.UPSTASH_WORKFLOW_URL}/api/videos/workflows/title`,
-            body: { userId, videoId: input.id }
-        });
-        
-        return workflowRunId;
-    }),
-    // NT-16: Generate AI title
+    // NT-17: Generate AI thumbnail by triggering Upstash background workflow
+    generateThumbnail: protectedProcedure
+        .input(z.object({ id: z.string().uuid(), prompt: z.string().min(10) }))
+        .mutation(async ({ ctx, input }) => {
+            const { id: userId } = ctx.user;
+            
+            const { workflowRunId } = await workflow.trigger({
+                url: `${process.env.UPSTASH_WORKFLOW_URL}/api/videos/workflows/thumbnail`,
+                body: { 
+                    userId, 
+                    videoId: input.id, 
+                    prompt: input.prompt
+                }
+            });
+            
+            return workflowRunId;
+        }),
+    // NT-16: Generate AI title by triggering Upstash background workflow
     generateTitle: protectedProcedure.input(z.object({ id: z.string().uuid() })).mutation(async ({ ctx, input }) => {
         const { id: userId } = ctx.user;
         
@@ -162,7 +168,7 @@ export const videosRouter = createTRPCRouter({
         
         return workflowRunId;
     }),
-    // NT-16: Generate AI description
+    // NT-16: Generate AI description by triggering Upstash background workflow
     generateDescription: protectedProcedure.input(z.object({ id: z.string().uuid() })).mutation(async ({ ctx, input }) => {
         const { id: userId } = ctx.user;
         

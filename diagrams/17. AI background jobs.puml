@@ -1,5 +1,5 @@
-@startuml ai-bg-jobs
-title AI Generated Metadata
+@startuml AI Background Jobs
+title AI Background Jobs
 actor user
 participant "Next.js app" as next
 participant "Upstash Workflow" as workflow

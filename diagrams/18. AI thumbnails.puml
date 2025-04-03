@@ -1,0 +1,19 @@
+@startuml 18. AI thumbnails
+title AI thumbnails
+actor user
+participant "Next.js app" as next
+participant "Upstash Workflow" as workflow
+participant OpenAI as ai
+participant uploadthing
+database Neon as db
+
+user -> next : 1. Enter image prompt
+next -> workflow : 2. Trigger Upstash Workflow
+workflow -> next : 3. Callback **POST /api/videos/workflows/thumbnail**
+next -> ai : 4. Send image prompt
+ai --> next : Return image urls
+next -> uploadthing : 5. Delete thumbnail
+next -> db : 6. Delete thumbnail url and key
+next -> uploadthing : 6. Upload AI thumbnail
+next -> db : 7. Update thumbnail url and key
+@enduml
