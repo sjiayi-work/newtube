@@ -2,6 +2,7 @@ import { createTRPCRouter } from '../init';
 import { studiosRouter } from '@/modules/studio/server/procedures';
 import { categoriesRouter } from '@/modules/categories/server/procedures';
 import { videosRouter } from '@/modules/videos/server/procedures';
+import { videoViewsRouter } from '@/modules/video-views/server/procedure';
 
 /**
  * NT-7: This file is adapted from 
@@ -11,7 +12,8 @@ import { videosRouter } from '@/modules/videos/server/procedures';
 export const appRouter = createTRPCRouter({
     categories: categoriesRouter,
     studios: studiosRouter,
-    videos: videosRouter
+    videos: videosRouter,
+    videoViews: videoViewsRouter
 });
 
 // export type definition of API

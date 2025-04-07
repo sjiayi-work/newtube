@@ -2,6 +2,7 @@
 
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useAuth } from '@clerk/nextjs';
 
 import { cn } from '@/lib/utils';
 import { VideoPlayer } from '@/modules/videos/ui/components/video-player';
@@ -28,15 +29,32 @@ export const VideoSection = ({ videoId }: VideoSectionProps) => {
 };
 
 const VideoSectionSuspense = ({ videoId }: VideoSectionProps) => {
+    const { isSignedIn } = useAuth();
+    
+    // NT-19: Create views
+    const utils = trpc.useUtils();
     const [video] = trpc.videos.getOne.useSuspenseQuery({ id: videoId });
+    const createView = trpc.videoViews.create.useMutation({
+        onSuccess: () => {
+            utils.videos.getOne.invalidate();
+        }
+    });
+    
+    const handlePlay = () => {
+        if (!isSignedIn) {
+            return;
+        }
+        
+        createView.mutate({ videoId });
+    };
     
     return (
         <>
-            <div className={cn('aspect-video bg-black rounded-xl overflow-hidden relative', 'waiting' !== 'ready' && 'rounded-b-none')}>
-                <VideoPlayer autoPlay onPlay={() => {}} playbackId={video.muxPlaybackId} thumbnailUrl={video.thumbnailUrl} />
+            <div className={cn('aspect-video bg-black rounded-xl overflow-hidden relative', video.muxStatus !== 'ready' && 'rounded-b-none')}>
+                <VideoPlayer autoPlay onPlay={handlePlay} playbackId={video.muxPlaybackId} thumbnailUrl={video.thumbnailUrl} />
             </div>
             
-            <VideoBanner status='waiting' />
+            <VideoBanner status={video.muxStatus} />
             <VideoTopRow video={video} />
         </>
     );
