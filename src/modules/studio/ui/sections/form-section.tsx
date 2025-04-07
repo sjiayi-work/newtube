@@ -22,7 +22,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
-import { VideoPlayer } from '../components/video-player';
+import { VideoPlayer } from '../../../videos/ui/components/video-player';
 import { ThumbnailUploadModal } from '../components/thumbnail-upload-modal';
 import { ThumbnailGenerateModal } from '../components/thumbnail-generate-modal';
 
