@@ -4,7 +4,7 @@ import { VideoView } from '@/modules/studio/ui/views/video-view';
 export const dynamic = 'force-dynamic';
 
 interface PageProps {
-    params: Promise<{ videoId: string }>;
+    params: Promise<{ videoId: string; }>;
 }
 
 const VideoPage = async ({ params }: PageProps) => {

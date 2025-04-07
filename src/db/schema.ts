@@ -2,7 +2,7 @@ import { relations } from 'drizzle-orm';
 import { pgTable, timestamp, uuid, text, uniqueIndex, integer, pgEnum } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createSelectSchema, createUpdateSchema } from 'drizzle-zod';
 
-// create 'users' schema
+// NT-4: Create 'users' schema
 export const users = pgTable('users', {
     id: uuid('id').primaryKey().defaultRandom(),
     clerkId: text('clerk_id').unique().notNull(),   // User Id from Clerk
@@ -12,6 +12,7 @@ export const users = pgTable('users', {
     updatedAt: timestamp('updated_at').defaultNow().notNull()
 }, (table) => [uniqueIndex('clerk_id_index').on(table.clerkId)]);   // create index on 'clerk_id' column
 
+// NT-10: Add user relations.
 // NOTE: Not necessary needed, as `relations` is for database that does not support foreign key,
 // and relations only take effect on application level, i.e: no changes detected when push to Neon.
 // Keep it here for study purpose.
@@ -19,7 +20,7 @@ export const userRelations = relations(users, ({ many }) => ({
     videos: many(videos)
 }));
 
-// create 'categories' schema
+// NT-8: Create 'categories' schema
 export const categories = pgTable('categories', {
     id: uuid('id').primaryKey().defaultRandom(),
     name: text('name').unique().notNull(),
@@ -34,7 +35,7 @@ export const categoryRelations = relations(categories, ({ many }) => ({
 
 export const videoVisibility = pgEnum('video_visibility', ['private', 'public']);
 
-// create 'videos' schema
+// NT-10: Create 'videos' schema
 export const videos = pgTable('videos', {
     id: uuid('id').primaryKey().defaultRandom(),
     title: text('title').notNull(),
@@ -68,6 +69,7 @@ export const videoInsertSchema = createInsertSchema(videos);
 export const videoUpdateSchema = createUpdateSchema(videos);
 export const videoSelectSchema = createSelectSchema(videos);
 
+// NT-10: Create video relations, but not important
 export const videoRelations = relations(videos, ({ one }) => ({
     user: one(users, {
         fields: [videos.userId],

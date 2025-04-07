@@ -12,7 +12,7 @@ import { ratelimit } from '@/lib/ratelimit';
 
 /**
  * NOTE: This file is copied from:
- * @link https://trpc.io/docs/client/react/server-components#2-create-a-trpc-router
+ * {@link https://trpc.io/docs/client/react/server-components#2-create-a-trpc-router}
  */
 
 export const createTRPCContext = cache(async () => {
@@ -41,6 +41,7 @@ const t = initTRPC.context<Context>().create({
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 export const baseProcedure = t.procedure;
+// NT-7: Add protected procedure where user must login
 export const protectedProcedure = t.procedure.use(async function isAuthed(opts) {
     const { ctx } = opts;
     if (!ctx.clerkUserId) {

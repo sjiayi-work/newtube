@@ -2,13 +2,14 @@ import z from 'zod';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 import { UploadThingError, UTApi } from 'uploadthing/server';
 import { auth } from '@clerk/nextjs/server';
+import { and, eq } from 'drizzle-orm';
+
 import { db } from '@/db';
 import { users, videos } from '@/db/schema';
-import { and, eq } from 'drizzle-orm';
 
 /**
  * NOTE: This file is copied from:
- * https://docs.uploadthing.com/getting-started/appdir#creating-your-first-file-route
+ * {@link https://docs.uploadthing.com/getting-started/appdir#creating-your-first-file-route}
  */
 
 const f = createUploadthing();

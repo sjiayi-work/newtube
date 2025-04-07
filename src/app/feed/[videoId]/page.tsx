@@ -9,6 +9,6 @@ const VideoPage = async ({ params }: PageProps) => {
     return (
         <div>Video Id Page: { videoId }</div>
     );
-}
+};
 
 export default VideoPage;

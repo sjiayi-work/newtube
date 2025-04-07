@@ -4,7 +4,7 @@ import { ourFileRouter } from './core';
 
 /**
  * NOTE: This file is copied from:
- * https://docs.uploadthing.com/getting-started/appdir#create-a-next-js-api-route-using-the-file-router
+ * {@link https://docs.uploadthing.com/getting-started/appdir#create-a-next-js-api-route-using-the-file-router}
  */
 
 // Export routes for Next App Router

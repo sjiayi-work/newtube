@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { HistoryIcon, ListVideoIcon, ThumbsUpIcon } from 'lucide-react';
 import { useAuth, useClerk } from '@clerk/nextjs';
+
+import { SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 
 const items = [
     { title: 'History', url: '/playlists/history', icon: HistoryIcon, auth: true }, 
@@ -40,4 +41,4 @@ export const PersonalSection = () => {
             </SidebarGroupContent>
         </SidebarGroup>
     );
-}
+};

@@ -1,13 +1,10 @@
 import { HydrateClient, trpc } from '@/trpc/server';
-
 import { HomeView } from '@/modules/home/ui/views/home-view';
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic';     // <-- must have when have prefetch
 
 interface HomeProps {
-    searchParams: Promise<{
-        categoryId?: string;
-    }>
+    searchParams: Promise<{ categoryId?: string; }>
 }
 
 export default async function Home({ searchParams }: HomeProps) {
@@ -20,7 +17,7 @@ export default async function Home({ searchParams }: HomeProps) {
      * Method 2: Server side calling
      *      const data = await trpc.hello({ text: 'King' });
      * 
-     * Method 3: Prefetch, like current code
+     * Method 3: Prefetch from server, like current code
      */
     void trpc.categories.getMany.prefetch();
     

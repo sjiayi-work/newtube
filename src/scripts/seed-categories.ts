@@ -2,6 +2,7 @@ import { db } from '@/db';
 import { categories } from '@/db/schema';
 
 /**
+ * NT-8: Script to seed categories.
  * NOTE: This file is not working if using NPM.
  * Run command: `bun src/scripts/seed-categories.ts`
  */

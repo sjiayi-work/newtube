@@ -7,6 +7,10 @@ import { Badge } from './ui/badge';
 import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 import { Skeleton } from './ui/skeleton';
 
+/**
+ * NT-8: FilterCarousel component.
+ */
+
 interface FilterCarouselProps {
     onSelect: (value: string | null) => void;
     data: {
@@ -17,12 +21,8 @@ interface FilterCarouselProps {
     isLoading?: boolean;
 }
 
-export const FilterCarousel = ({
-    value,
-    isLoading,
-    onSelect,
-    data
-}: FilterCarouselProps) => {
+export const FilterCarousel = ({ onSelect, data, value, isLoading }: FilterCarouselProps) => {
+    // Refer to https://ui.shadcn.com/docs/components/carousel
     const [api, setApi] = useState<CarouselApi>();
     const [current, setCurrent] = useState(0);
     const [count, setCount] = useState(0);
@@ -70,7 +70,9 @@ export const FilterCarousel = ({
                     { !isLoading && data.map(item => (
                         <CarouselItem key={item.value} className="pl-3 basis-auto" onClick={() => onSelect(item.value)}>
                             <Badge className="rounded-lg px-3 py-1 cursor-pointer whitespace-nowrap text-sm"
-                                    variant={value === item.value ? 'default' : 'secondary'}>{ item.label }</Badge>
+                                    variant={value === item.value ? 'default' : 'secondary'}>
+                                { item.label }
+                            </Badge>
                         </CarouselItem>
                     ))}
                 </CarouselContent>

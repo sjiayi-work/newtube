@@ -1,8 +1,9 @@
 import { cva, VariantProps } from 'class-variance-authority';
+
 import { Avatar, AvatarImage } from './ui/avatar';
 import { cn } from '@/lib/utils';
 
-const avatarVariants = cva("", {
+const avatarVariants = cva('', {
     variants: {
         size: {
             default: 'h-9 w-9',
@@ -21,16 +22,10 @@ interface UserAvatarProps extends VariantProps<typeof avatarVariants> {
     imageUrl: string;
     name: string;
     className?: string;
-    onClick?: () => void
+    onClick?: () => void;
 }
 
-export const UserAvatar = ({
-    imageUrl,
-    name,
-    className,
-    onClick,
-    size
-}: UserAvatarProps) => {
+export const UserAvatar = ({ imageUrl, name, className, onClick, size }: UserAvatarProps) => {
     return (
         <Avatar className={cn(avatarVariants({ size, className }))} onClick={onClick}>
             <AvatarImage src={imageUrl} alt={name} />

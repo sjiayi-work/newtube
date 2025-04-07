@@ -1,15 +1,11 @@
-import { ReactNode } from "react";
+import { PropsWithChildren } from 'react';
 
-interface LayoutProps {
-    children: ReactNode
-}
-
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children }: PropsWithChildren) => {
     return (
         <div>
             { children }
         </div>
-    )
-}
+    );
+};
 
 export default Layout;

@@ -1,5 +1,6 @@
-import { SidebarProvider } from '@/components/ui/sidebar';
 import { PropsWithChildren } from 'react'
+
+import { SidebarProvider } from '@/components/ui/sidebar';
 import { HomeNavbar } from '../components/home-navbar';
 import { HomeSidebar } from '../components/home-sidebar';
 
@@ -15,6 +16,6 @@ const HomeLayout = ({ children }: PropsWithChildren) => {
             </div>
         </SidebarProvider>
     );
-}
+};
 
 export default HomeLayout;

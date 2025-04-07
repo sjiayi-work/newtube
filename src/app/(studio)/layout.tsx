@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react';
 
 import StudioLayout from '@/modules/studio/ui/layouts/studio-layout';
 

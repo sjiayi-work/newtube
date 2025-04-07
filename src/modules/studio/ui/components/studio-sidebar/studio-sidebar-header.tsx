@@ -5,6 +5,10 @@ import { SidebarHeader, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@
 import { UserAvatar } from '@/components/user-avatar';
 import { Skeleton } from '@/components/ui/skeleton';
 
+/**
+ * NT-9: StudioSidebarHeader component.
+ */
+
 export const StudioSidebarHeader = () => {
     const { user } = useUser();
     const { state } = useSidebar();
@@ -26,7 +30,7 @@ export const StudioSidebarHeader = () => {
             <SidebarMenuItem>
                 <SidebarMenuButton tooltip="Your profile" asChild>
                     <Link href="/users/current">
-                        <UserAvatar imageUrl={user.imageUrl} name={user.fullName ?? 'User'} size="xs" />
+                        <UserAvatar imageUrl={user.imageUrl} name={user.fullName || 'User'} size="xs" />
                         <span className="text-sm">Your profile</span>
                     </Link>
                 </SidebarMenuButton>
@@ -37,7 +41,7 @@ export const StudioSidebarHeader = () => {
     return (
         <SidebarHeader className="flex items-center justify-center pb-4">
             <Link href="/users/current">
-                <UserAvatar imageUrl={user?.imageUrl} name={user?.fullName ?? 'User'} className="size-[112px] hover:opacity-80 transition-opacity" />
+                <UserAvatar imageUrl={user?.imageUrl} name={user?.fullName || 'User'} className="size-[112px] hover:opacity-80 transition-opacity" />
             </Link>
             <div className="flex flex-col items-center mt-2 gap-y-1">
                 <p className="text-sm font-medium">Your profile</p>

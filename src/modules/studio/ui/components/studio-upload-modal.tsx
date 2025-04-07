@@ -12,9 +12,12 @@ import { StudioUploader } from './studio-uploader';
 export const StudioUploadModal = () => {
     const router = useRouter();
     const utils = trpc.useUtils();
+    
+    // NT-10: Create video
     const create = trpc.videos.create.useMutation({
         onSuccess: () => {
             toast.success('Video created');
+            // refresh the video list
             utils.studios.getMany.invalidate();
         },
         onError: (error) => {

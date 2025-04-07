@@ -7,13 +7,14 @@ import { format } from 'date-fns';
 import { Globe2Icon, LockIcon } from 'lucide-react';
 
 import { DEFAULT_LIMIT } from '@/constants';
-import { trpc } from '@/trpc/client';
-import { snakeCaseToTitle } from '@/lib/utils';
 import { InfiniteScroll } from '@/components/infinite-scroll';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { VideoThumbnail } from '@/modules/videos/ui/components/video-thumbnail';
 import { Skeleton } from '@/components/ui/skeleton';
+import { snakeCaseToTitle } from '@/lib/utils';
+import { VideoThumbnail } from '@/modules/videos/ui/components/video-thumbnail';
+import { trpc } from '@/trpc/client';
 
+// NT-11: Add suspense and error boundary
 export const VideosSection = () => {
     return (
         <Suspense fallback={<VideosSectionSkeleton />}>

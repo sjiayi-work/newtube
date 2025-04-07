@@ -9,11 +9,11 @@ import { mux } from '@/lib/mux';
 
 const SIGNING_SECRET = process.env.MUX_WEBHOOK_SECRET;
 
-type WebhookEvent = VideoAssetCreatedWebhookEvent | 
-                    VideoAssetReadyWebhookEvent | 
-                    VideoAssetErroredWebhookEvent | 
-                    VideoAssetDeletedWebhookEvent |
-                    VideoAssetTrackReadyWebhookEvent;
+type WebhookEvent = VideoAssetCreatedWebhookEvent 
+                    | VideoAssetReadyWebhookEvent 
+                    | VideoAssetErroredWebhookEvent 
+                    | VideoAssetDeletedWebhookEvent 
+                    | VideoAssetTrackReadyWebhookEvent;
 
 export const POST = async (request: Request) => {
     if (!SIGNING_SECRET) {

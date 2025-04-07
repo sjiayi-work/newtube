@@ -4,18 +4,13 @@ import { useIntersectionObserver } from '@/hooks/use-intersection-observer';
 import { Button } from './ui/button';
 
 interface InfiniteScrollProps {
-    isManual?: boolean;
     hasNextPage: boolean;
     isFetchingNextPage: boolean;
-    fetchNextPage: () => void
+    fetchNextPage: () => void;
+    isManual?: boolean;
 }
 
-export const InfiniteScroll = ({
-    isManual = false,
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage
-}: InfiniteScrollProps) => {
+export const InfiniteScroll = ({ hasNextPage, isFetchingNextPage, fetchNextPage, isManual = false }: InfiniteScrollProps) => {
     const { targetRef, isIntersecting } = useIntersectionObserver({
         threshold: 0.5,
         rootMargin: '100px'

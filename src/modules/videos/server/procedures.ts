@@ -10,6 +10,7 @@ import { workflow } from '@/lib/workflow';
 import { createTRPCRouter, protectedProcedure } from '@/trpc/init';
 
 export const videosRouter = createTRPCRouter({
+    // NT-10: Create video database
     create: protectedProcedure.mutation(async ({ ctx }) => {
         const { id: userId } = ctx.user;
         

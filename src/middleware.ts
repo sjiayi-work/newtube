@@ -1,10 +1,18 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
+/**
+ * NT-3: Add Clerk middleware.
+ * NOTE: This file is adapted from 
+ * @link https://clerk.com/docs/quickstarts/nextjs#add-clerk-middleware-to-your-app
+ */
+
 // protect these routes
 const isProtectedRoute = createRouteMatcher(["/studio(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
-    if (isProtectedRoute(req)) await auth.protect();
+    if (isProtectedRoute(req)) {
+        await auth.protect();
+    }
 });
 
 export const config = {

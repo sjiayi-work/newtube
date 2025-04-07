@@ -8,18 +8,22 @@ import { Sidebar, SidebarContent, SidebarGroup, SidebarMenu, SidebarMenuButton, 
 import { Separator } from '@/components/ui/separator';
 import { StudioSidebarHeader } from './studio-sidebar-header';
 
+/**
+ * NT-9: StudioSidebar component.
+ */
+
 export const StudioSidebar = () => {
     const pathname = usePathname();
     
     return (
         <Sidebar className="pt-16 z-40" collapsible="icon">
             <SidebarContent className="bg-background">
-                <SidebarMenu>
-                    <SidebarGroup>
+                <SidebarGroup>
+                    <SidebarMenu>
                         <StudioSidebarHeader />
                         
                         <SidebarMenuItem>
-                            <SidebarMenuButton isActive={pathname == '/studio'} tooltip="Exit studio" asChild>
+                            <SidebarMenuButton isActive={pathname == '/studio'} tooltip="Content" asChild>
                                 <Link href="/studio">
                                     <VideoIcon className="size-5" />
                                     <span className="text-sm">Content</span>
@@ -37,8 +41,8 @@ export const StudioSidebar = () => {
                                 </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
-                    </SidebarGroup>
-                </SidebarMenu>
+                    </SidebarMenu>
+                </SidebarGroup>
             </SidebarContent>
         </Sidebar>
     );

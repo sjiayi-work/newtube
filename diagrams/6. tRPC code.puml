@@ -1,0 +1,43 @@
+@startuml 6. tRPC code
+class Page <<videos/[videoId]/page.tsx>>
+class VideoClient <<videos/[videoId]/video-client.tsx>>
+
+Page --|> VideoClient : Preload from server & cache
+VideoClient --|> Page : Revalidate from client
+
+note right of Page
+    const Page = async ({ params: { videoId } }) => {
+        void trpc.videos.prefetch({ videoId });
+        
+        return (
+            <HydrateClient>
+                <Suspense fallback={<p>Loading...</p>}>
+                    <ErrorBoundary fallback={<p>Error...</p>}>
+                        <VideoClient />
+                    </ErrorBoundary>
+                </Suspense>
+            </HydrateClient>
+        );
+    };
+end note
+
+note right of VideoClient
+    "use client";
+    
+    const VideoClient = () => {
+        const utils = trpc.useUtils();
+        const [videos] = trpc.videos.useSuspenseQuery({ videoId });
+        
+        const revalidate = () => {
+            utils.videos.invalidate({ videoId });
+        };
+        
+        return (
+            <div>
+                {videos.map((video) => <p>{ video.id }</p>)}
+                <button onClick={revalidate}>revalidate</button>
+            </div>
+        );
+    };
+end note
+@enduml

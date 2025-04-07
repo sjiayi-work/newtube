@@ -25,7 +25,7 @@ export const studiosRouter = createTRPCRouter({
             
             return video;
         }),
-        
+    // NT-10: List user's videos
     getMany: protectedProcedure
         .input(
             z.object({

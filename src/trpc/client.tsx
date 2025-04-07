@@ -14,7 +14,7 @@ import type { AppRouter } from './routers/_app';
 
 /**
  * NOTE: This file is copied from
- * @link https://trpc.io/docs/client/react/server-components#4-create-a-trpc-client-for-client-components.
+ * {@link https://trpc.io/docs/client/react/server-components#4-create-a-trpc-client-for-client-components}.
  */
 
 export const trpc = createTRPCReact<AppRouter>();
@@ -32,8 +32,14 @@ function getQueryClient() {
 
 function getUrl() {
     const base = (() => {
-        if (typeof window !== 'undefined') return '';
-        if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+        if (typeof window !== 'undefined') {
+            return '';
+        }
+        
+        if (process.env.VERCEL_URL) {
+            return `https://${process.env.VERCEL_URL}`;
+        }
+        
         return 'http://localhost:3000';
     })();
     
@@ -57,9 +63,9 @@ export function TRPCProvider(
                     transformer: superjson,
                     url: getUrl(),
                     async headers() {
-                        // for logging improvement??
+                        // NT-7: for logging improvement??
                         const headers = new Headers();
-                        headers.set('x-trpc-source', 'nextks-react');
+                        headers.set('x-trpc-source', 'nextjs-react');
                         return headers;
                     }
                 }),

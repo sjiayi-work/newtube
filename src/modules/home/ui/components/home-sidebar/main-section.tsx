@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { FlameIcon, HomeIcon, PlaySquareIcon } from 'lucide-react';
 import { useAuth, useClerk } from '@clerk/nextjs';
+
+import { SidebarGroup, SidebarGroupContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 
 const items = [
     { title: 'Home', url: '/', icon: HomeIcon }, 
@@ -39,4 +40,4 @@ export const MainSection = () => {
             </SidebarGroupContent>
         </SidebarGroup>
     );
-}
+};

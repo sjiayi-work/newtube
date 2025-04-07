@@ -1,5 +1,6 @@
-import { useIsMobile } from '@/hooks/use-mobile';
 import React from 'react';
+
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from './ui/drawer';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 
@@ -10,12 +11,7 @@ interface ResponsiveModalProps {
     onOpenChange: (open: boolean) => void;
 }
 
-export const ResponsiveModal = ({
-    children,
-    open,
-    title,
-    onOpenChange
-}: ResponsiveModalProps) => {
+export const ResponsiveModal = ({ children, open, title, onOpenChange }: ResponsiveModalProps) => {
     const isMobile = useIsMobile();
     
     if (isMobile) {
