@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { useAuth } from '@clerk/nextjs';
 
-import { VideoGetOneOutput } from '../../types';
 import { UserAvatar } from '@/components/user-avatar';
 import { Button } from '@/components/ui/button';
 import { SubscriptionButton } from '@/modules/subscriptions/ui/components/subscription-button';
 import { UserInfo } from '@/modules/users/ui/components/user-info';
+import { VideoGetOneOutput } from '../../types';
+import { useSubscription } from '@/hooks/use-subscription';
 
 /**
  * NT-18: VideoOwner component.
@@ -17,7 +18,12 @@ interface VideoOwnerProps {
 }
 
 export const VideoOwner = ({ user, videoId }: VideoOwnerProps) => {
-    const { userId } = useAuth();
+    const { userId, isLoaded } = useAuth();
+    const { onClick, isPending } = useSubscription({
+        userId: user.id,
+        isSubscribed: user.viewerSubscribed,
+        fromVideoId: videoId
+    });
     
     return (
         <div className="flex items-center sm:items-start justify-between sm:justify-start gap-3 min-w-0">
@@ -28,8 +34,7 @@ export const VideoOwner = ({ user, videoId }: VideoOwnerProps) => {
                     <div className="flex flex-col gap-1 min-w-0">
                         <UserInfo size="lg" name={user.name} />
                         <span className="text-sm text-muted-foreground line-clamp-1">
-                            {/* TODO: properly fill subscriber count */}
-                            {0} subscribers
+                            { user.subscriberCount } subscribers
                         </span>
                     </div>
                 </div>
@@ -40,7 +45,7 @@ export const VideoOwner = ({ user, videoId }: VideoOwnerProps) => {
                     <Link href={`/studio/videos/${videoId}`}>Edit video</Link>
                 </Button>
             : (
-                <SubscriptionButton onClick={() => {}} disabled={false} isSubscribed={false} className="flex-none" />
+                <SubscriptionButton onClick={onClick} disabled={isPending || !isLoaded} isSubscribed={user.viewerSubscribed} className="flex-none" />
             )}
         </div>
     );
