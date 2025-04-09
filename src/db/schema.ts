@@ -25,7 +25,8 @@ export const userRelations = relations(users, ({ many }) => ({
     }),
     subscribers: many(subscriptions, {
         relationName: 'subscriptions_creator_id_fkey'
-    })
+    }),
+    comments: many(comments)
 }));
 
 // NT-8: Create 'categories' schema
@@ -88,7 +89,8 @@ export const videoRelations = relations(videos, ({ one, many }) => ({
         references: [categories.id]
     }),
     views: many(videoViews),
-    reactions: many(videoReactions)
+    reactions: many(videoReactions),
+    comments: many(comments)
 }));
 
 // NT-19: Create video_views table, relations and schemas
@@ -164,14 +166,39 @@ export const subscriptions = pgTable('subscriptions', {
 ]);
 
 export const subscriptionRelations = relations(subscriptions, ({ one }) => ({
-    viewerId: one(users, {
+    viewer: one(users, {
         fields: [subscriptions.viewerId],
         references: [users.id],
         relationName: 'subscriptions_viewer_id_fkey'
     }),
-    creatorId: one(users, {
+    creator: one(users, {
         fields: [subscriptions.creatorId],
         references: [users.id],
         relationName: 'subscriptions_creator_id_fkey'
     })
 }));
+
+// NT-22: Create comments schema, relations and schemas
+export const comments = pgTable('comments', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+    videoId: uuid('video_id').references(() => videos.id, { onDelete: 'cascade' }).notNull(),
+    value: text('value').notNull(),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+});
+
+export const commentRelations = relations(comments, ({ one }) => ({
+    user: one(users, {
+        fields: [comments.userId],
+        references: [users.id]
+    }),
+    video: one(videos, {
+        fields: [comments.videoId],
+        references: [videos.id]
+    }),
+}));
+
+export const commentSelectSchema = createSelectSchema(comments);
+export const commentInsertSchema = createInsertSchema(comments);
+export const commentUpdateSchema = createUpdateSchema(comments);

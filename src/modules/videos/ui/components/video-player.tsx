@@ -9,6 +9,11 @@ interface VideoPlayerProps {
     onPlay?: () => void;
 }
 
+// NT-22: Add skeleton
+export const VideoPlayerSkeleton = () => {
+    return <div className="aspect-video bg-black rounded-xl"></div>
+};
+
 export const VideoPlayer = ({
     playbackId,
     thumbnailUrl,
